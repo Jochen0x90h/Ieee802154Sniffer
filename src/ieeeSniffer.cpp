@@ -1,4 +1,5 @@
 #include <ieeeSniffer.hpp>
+#include <coco/convert.hpp>
 #include <coco/pcap.hpp>
 #include <coco/crypt.hpp>
 #include <coco/hash.hpp>
@@ -18,7 +19,7 @@
 #include <iomanip>
 
 
-// logs ieee 802.15.4 traffic to a .pcap file
+// logs ieee 802.15.4 traffic to std::cout or a .pcap file
 
 // PTM 215Z/216Z: Press A0 (upper left) for 7 seconds to commission on channel 15, then A0 and B1 (upper left and lower right) together to confirm
 
@@ -40,7 +41,7 @@ AesKey networkAesKey;
 // todo: one link key per device
 AesKey linkAesKey;
 
-
+/*
 template <typename T>
 std::ostream &operator <<(std::ostream &s, Dec<T> dec) {
 	s << std::setw(dec.digitCount) << std::setfill('0') << std::dec << int64_t(dec.value);
@@ -52,7 +53,7 @@ std::ostream &operator <<(std::ostream &s, Hex<T> hex) {
 	s << std::setw(hex.digitCount) << std::setfill('0') << std::hex << int64_t(hex.value);
 	return s;
 }
-
+*/
 
 // print tinycrypt aes key
 void printKey(char const *name, AesKey const &key) {
@@ -642,11 +643,11 @@ void handleAps(PacketReader &r, uint8_t const *extendedSource) {
 			{
 				std::cout << "Transport Key" << std::endl;
 				auto keyType = r.e8<zb::StandardKeyType>();
-				auto key = r.data8<16>();
+				auto key = r.array8<16>();
 				if (keyType == zb::StandardKeyType::NETWORK)
 					uint8_t keySequenceNumber = r.u8();
-				auto extendedDestination = r.data8<8>();
-				auto extendedSource = r.data8<8>();
+				auto extendedDestination = r.array8<8>();
+				auto extendedSource = r.array8<8>();
 
 				// set key
 				switch (keyType) {

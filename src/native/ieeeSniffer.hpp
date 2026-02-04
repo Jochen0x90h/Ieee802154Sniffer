@@ -27,7 +27,7 @@ struct Drivers {
 	UsbHost::Buffer bulkBuffer{Radio::BUFFER_SIZE, bulkEndpoint};
 
 	// radio on usb (flash RadioDevice from coco-ieee802154 onto a nRF52840 dongle)
-	Radio radio{controlBuffer, Radio::MAX_HEADER_SIZE};
+	Radio radio{controlBuffer};
 	Radio::Node node{radio, bulkEndpoint};
 	Radio::Buffer radioBuffer{node, bulkBuffer};
 
