@@ -1,8 +1,10 @@
-# Configure the project for use in an IDE that supports CMakeUserPresets.json
+# Calls "conan install" for all presets in cpresets.txt
+# Also creates a CMakeUserPresets.json which is supported by IDEs such as VSCode
 #
 # usage:
-# 1. Copy presets.txt from coco/support/conan/[windows] to project root (next to this file) and adjust to own needs
-# 2. python configure.py
+# 1: Copy cpresets.txt containing a list of presets from coco/support/conan/[operating system] to project root (next to this file)
+# 2: Optional: Open cpresets.txt in an editor and adjust to own needs
+# 3: $ python cinstall.py
 #
 
 import sys
@@ -16,7 +18,7 @@ import subprocess
 home = Path.home()
 
 # read presets from presets.txt
-file = open('presets.txt', 'r')
+file = open('cpresets.txt', 'r')
 presets = file.readlines()
 file.close()
 

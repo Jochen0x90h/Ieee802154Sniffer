@@ -1,17 +1,8 @@
+import os
 from conan import ConanFile
 from conan.tools.files import copy
 from conan.tools.cmake import CMake
 
-
-# helper function for deploy()
-def copy(src, dst):
-    if os.path.islink(src):
-        if os.path.lexists(dst):
-            os.unlink(dst)
-        linkto = os.readlink(src)
-        os.symlink(linkto, dst)
-    else:
-        shutil.copy(src, dst)
 
 class Project(ConanFile):
     name = "ieee802154-sniffer"
@@ -34,12 +25,12 @@ class Project(ConanFile):
         return False
 
     def requirements(self):
-        self.requires("coco-ieee802154/0.2.0", options={"platform": self.options.platform})
-        self.requires("coco-zigbee/0.1.0", options={"platform": self.options.platform})
-        self.requires("coco-pcap/0.1.0", options={"platform": self.options.platform})
+        self.requires("coco-ieee802154/0.3.0", options={"platform": self.options.platform})
+        self.requires("coco-zigbee/0.2.0", options={"platform": self.options.platform})
+        self.requires("coco-pcap/0.2.0", options={"platform": self.options.platform})
 
     def build_requirements(self):
-        self.tool_requires("coco-toolchain/0.3.0", options={"platform": self.options.platform})
+        self.tool_requires("coco-toolchain/0.4.0", options={"platform": self.options.platform})
 
     keep_imports = True
     def imports(self):
